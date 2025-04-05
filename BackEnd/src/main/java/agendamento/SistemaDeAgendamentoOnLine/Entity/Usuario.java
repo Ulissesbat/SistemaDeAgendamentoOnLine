@@ -1,8 +1,11 @@
 package agendamento.SistemaDeAgendamentoOnLine.Entity;
 
+import java.util.List;
 import java.util.Objects;
 
 import agendamento.SistemaDeAgendamentoOnLine.Enums.TipoUsuario;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 
 public class Usuario {
 	
@@ -13,6 +16,9 @@ public class Usuario {
 	
 	
 	private TipoUsuario tipo;
+	
+	@OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Agendamento> agendamentos;
 	
 	public Usuario() {
 	}

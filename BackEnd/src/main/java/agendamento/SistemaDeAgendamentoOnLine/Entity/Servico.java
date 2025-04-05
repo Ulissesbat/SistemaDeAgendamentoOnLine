@@ -1,15 +1,28 @@
 package agendamento.SistemaDeAgendamentoOnLine.Entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
 public class Servico {
-	
+
 	private Long id;
 	private String nome;
 	private Integer duracao;
 	private BigDecimal valor;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "profissional_id")
+	private Profissional profissional;
+
+	@OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Agendamento> agendamentos;
+
 	public Servico() {
 	}
 
@@ -53,6 +66,19 @@ public class Servico {
 		this.valor = valor;
 	}
 
+
+	public Profissional getProfissional() {
+		return profissional;
+	}
+
+	public void setProfissional(Profissional profissional) {
+		this.profissional = profissional;
+	}
+
+	public List<Agendamento> getAgendamentos() {
+		return agendamentos;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -68,6 +94,6 @@ public class Servico {
 			return false;
 		Servico other = (Servico) obj;
 		return Objects.equals(id, other.id);
-	}	
+	}
 
 }

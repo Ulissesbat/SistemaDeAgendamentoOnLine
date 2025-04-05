@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import agendamento.SistemaDeAgendamentoOnLine.Enums.CanalNotificacao;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 
 public class Notificacao {
 	
@@ -12,6 +14,18 @@ public class Notificacao {
 	private LocalDateTime dataHora;
 	
 	private CanalNotificacao canal;
+	
+	@OneToOne
+	@MapsId
+	private Agendamento agendamento;
+
+	public Agendamento getAgendamento() {
+		return agendamento;
+	}
+
+	public void setAgendamento(Agendamento agendamento) {
+		this.agendamento = agendamento;
+	}
 
 	public Notificacao() {
 	}
