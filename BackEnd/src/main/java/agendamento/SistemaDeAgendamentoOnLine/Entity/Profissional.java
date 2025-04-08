@@ -1,6 +1,7 @@
 package agendamento.SistemaDeAgendamentoOnLine.Entity;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,28 +9,39 @@ import java.util.Objects;
 
 import agendamento.SistemaDeAgendamentoOnLine.Enums.StatusAgendamento;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
 @Entity
-@DiscriminatorValue("PROFISSIONAL") // Valor que identifica registros de profissionais na tabela
-public class Profissional extends Usuario{
+@DiscriminatorValue("PROFISSIONAL")
+public class Profissional extends Usuario {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Transient
+	@Column(name = "tipo", insertable = false, updatable = false)
+	private String tipo;
 	private String especialidade;
 	private BigDecimal valorHora;
-	
+
 	@OneToOne(mappedBy = "profissional", cascade = CascadeType.ALL)
 	private Agenda agenda;
-	
+
 	@OneToMany(mappedBy = "profissional")
-	private List <Agendamento> agendamento = new ArrayList<>();
-	
+	private List<Agendamento> agendamento = new ArrayList<>();
+
 	@OneToMany(mappedBy = "profissional")
-	private List <Servico> servico = new ArrayList<>();
-	
+	private List<Servico> servico = new ArrayList<>();
+
 	public Profissional() {
 	}
 
@@ -76,22 +88,27 @@ public class Profissional extends Usuario{
 	public List<Agendamento> getAgendamento() {
 		return agendamento;
 	}
-	
-	 public List<Servico> getServico() {
+
+	public List<Servico> getServico() {
 		return servico;
 	}
 
 	public boolean isDisponivel(LocalDateTime dataHora) {
-	        // 1. Verifica se a data/hora está dentro da agenda do profissional
-	        if (!agenda.isHorarioDisponivel(dataHora)) {
-	            return false;
-	        }
+		// 1. Verifica se está dentro do horário comercial (com tolerância padrão de 30
+		// minutos)
+		Duration toleranciaPadrao = Duration.ofMinutes(30);
+		if (!agenda.isHorarioDisponivel(dataHora, toleranciaPadrao)) {
+			return false;
+		}
 
-	        // 2. Verifica se já existe agendamento no mesmo horário
-	        return agendamento.stream()
-	            .noneMatch(ag -> ag.getDataHora().equals(dataHora) 
-	                && ag.getStatus() != StatusAgendamento.CANCELADO);
-	    }
+		// 2. Verifica conflitos com agendamentos existentes
+		return agendamento.stream() // Corrigido para "agendamentos" (nome do campo)
+				.filter(ag -> ag.getStatus() != StatusAgendamento.CANCELADO).noneMatch(ag -> {
+					LocalDateTime dataAgendamento = ag.getDataHora(); // Certifique-se que este método existe
+					Duration diferenca = Duration.between(dataAgendamento, dataHora).abs();
+					return diferenca.compareTo(toleranciaPadrao) < 0;
+				});
+	}
 
 	@Override
 	public int hashCode() {
@@ -109,6 +126,5 @@ public class Profissional extends Usuario{
 		Profissional other = (Profissional) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
 }

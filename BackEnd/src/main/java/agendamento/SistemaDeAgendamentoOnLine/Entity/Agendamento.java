@@ -3,10 +3,15 @@ package agendamento.SistemaDeAgendamentoOnLine.Entity;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import agendamento.SistemaDeAgendamentoOnLine.Enums.StatusAgendamento;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -14,34 +19,37 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_agendamento")
+@EntityListeners(AuditingEntityListener.class)
 public class Agendamento {
-	
-	private Long id;
-	private LocalDateTime datahora;
-	private StatusAgendamento status;
-	
-	@ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Usuario cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "profissional_id")
-    private Profissional profissional;
-    
-    @OneToOne(mappedBy = "agendamento", cascade = CascadeType.ALL)
-    private Notificacao notificacao;
-    
-    @ManyToOne
-    @JoinColumn(name = "servico_id", nullable = false)
-    private Servico servico;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private LocalDateTime dataHora;
+	private StatusAgendamento status;
+
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
+
+	@ManyToOne
+	@JoinColumn(name = "profissional_id")
+	private Profissional profissional;
+
+	@OneToOne(mappedBy = "agendamento", cascade = CascadeType.ALL)
+	private Notificacao notificacao;
+
+	@ManyToOne
+	@JoinColumn(name = "servico_id", nullable = false)
+	private Servico servico;
+
 	public Agendamento() {
 	}
 
 	public Agendamento(Long id, LocalDateTime datahora, StatusAgendamento status) {
 		super();
 		this.id = id;
-		this.datahora = datahora;
+		this.dataHora = datahora;
 		this.status = status;
 	}
 
@@ -53,12 +61,12 @@ public class Agendamento {
 		this.id = id;
 	}
 
-	public LocalDateTime getDatahora() {
-		return datahora;
+	public LocalDateTime getDataHora() { // 'H' maiúsculo!
+		return dataHora;
 	}
 
 	public void setDatahora(LocalDateTime datahora) {
-		this.datahora = datahora;
+		this.dataHora = datahora;
 	}
 
 	public StatusAgendamento getStatus() {
@@ -70,11 +78,11 @@ public class Agendamento {
 	}
 
 	public Usuario getCliente() {
-		return cliente;
+		return usuario;
 	}
 
 	public void setCliente(Usuario cliente) {
-		this.cliente = cliente;
+		this.usuario = cliente;
 	}
 
 	public Profissional getProfissional() {
@@ -105,12 +113,12 @@ public class Agendamento {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-	
+
 	public void cancelar() {
-		 if (this.status != StatusAgendamento.CONFIRMADO) {
-	            throw new IllegalStateException("Agendamento não pode ser cancelado (status atual: " + this.status + ")");
-	        }
-	        this.status = StatusAgendamento.CANCELADO;
+		if (this.status != StatusAgendamento.CONFIRMADO) {
+			throw new IllegalStateException("Agendamento não pode ser cancelado (status atual: " + this.status + ")");
+		}
+		this.status = StatusAgendamento.CANCELADO;
 	}
 
 	@Override

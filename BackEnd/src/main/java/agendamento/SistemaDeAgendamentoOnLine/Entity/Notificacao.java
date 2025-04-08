@@ -4,11 +4,20 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import agendamento.SistemaDeAgendamentoOnLine.Enums.CanalNotificacao;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "tb_notificacao")
 public class Notificacao {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String mensagem;
 	private LocalDateTime dataHora;

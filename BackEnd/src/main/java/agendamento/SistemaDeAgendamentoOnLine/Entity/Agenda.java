@@ -20,7 +20,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "agendas")
+@Table(name = "agenda")
 public class Agenda {
 
     @Id

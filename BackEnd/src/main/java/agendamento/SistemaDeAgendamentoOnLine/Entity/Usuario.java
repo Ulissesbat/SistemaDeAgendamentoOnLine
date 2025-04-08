@@ -4,22 +4,34 @@ import java.util.List;
 import java.util.Objects;
 
 import agendamento.SistemaDeAgendamentoOnLine.Enums.TipoUsuario;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "usuarios")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 public class Usuario {
-	
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 	private String nome;
 	private String email;
 	private String telefone;
-	
-	
+
 	private TipoUsuario tipo;
-	
-	@OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Agendamento> agendamentos;
-	
+
+	@OneToMany(mappedBy = "usuario") // Refere-se ao campo na classe Agendamento
+	private List<Agendamento> agendamentos;
+
 	public Usuario() {
 	}
 
@@ -70,6 +82,12 @@ public class Usuario {
 
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario{" + "id=" + id + ", nome='" + nome + '\'' + ", email='" + email + '\'' + ", telefone='"
+				+ telefone + '\'' + ", tipo=" + tipo + '}';
 	}
 
 	@Override
