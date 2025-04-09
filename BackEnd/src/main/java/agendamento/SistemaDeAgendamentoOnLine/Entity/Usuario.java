@@ -16,10 +16,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "tb_usuario")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
-public class Usuario {
+@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
+public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,7 +27,6 @@ public class Usuario {
 	private String email;
 	private String telefone;
 
-	private TipoUsuario tipo;
 
 	@OneToMany(mappedBy = "usuario") // Refere-se ao campo na classe Agendamento
 	private List<Agendamento> agendamentos;
@@ -35,13 +34,12 @@ public class Usuario {
 	public Usuario() {
 	}
 
-	public Usuario(Long id, String nome, String email, String telefone, TipoUsuario tipo) {
+	public Usuario(Long id, String nome, String email, String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
-		this.tipo = tipo;
 	}
 
 	public Long getId() {
@@ -76,18 +74,12 @@ public class Usuario {
 		this.telefone = telefone;
 	}
 
-	public TipoUsuario getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoUsuario tipo) {
-		this.tipo = tipo;
-	}
+	public abstract TipoUsuario getTipo();
 
 	@Override
 	public String toString() {
 		return "Usuario{" + "id=" + id + ", nome='" + nome + '\'' + ", email='" + email + '\'' + ", telefone='"
-				+ telefone + '\'' + ", tipo=" + tipo + '}';
+				+ telefone + '\'' + '}';
 	}
 
 	@Override

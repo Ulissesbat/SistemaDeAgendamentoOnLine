@@ -9,6 +9,8 @@ import agendamento.SistemaDeAgendamentoOnLine.Enums.StatusAgendamento;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,7 +20,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_agendamento")
+@Table(name = "tb_agendamentos")
 @EntityListeners(AuditingEntityListener.class)
 public class Agendamento {
 
@@ -26,6 +28,8 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDateTime dataHora;
+	
+	@Enumerated(EnumType.STRING)
 	private StatusAgendamento status;
 
 	@ManyToOne
@@ -36,11 +40,11 @@ public class Agendamento {
 	@JoinColumn(name = "profissional_id")
 	private Profissional profissional;
 
-	@OneToOne(mappedBy = "agendamento", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "agendamentos", cascade = CascadeType.ALL)
 	private Notificacao notificacao;
 
 	@ManyToOne
-	@JoinColumn(name = "servico_id", nullable = false)
+	@JoinColumn(name = "servico_id")
 	private Servico servico;
 
 	public Agendamento() {

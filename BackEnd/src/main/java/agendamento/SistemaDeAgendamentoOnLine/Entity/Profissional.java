@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 import agendamento.SistemaDeAgendamentoOnLine.Enums.StatusAgendamento;
+import agendamento.SistemaDeAgendamentoOnLine.Enums.TipoUsuario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -26,21 +27,21 @@ public class Profissional extends Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Transient
-	@Column(name = "tipo", insertable = false, updatable = false)
-	private String tipo;
+	
+	@Column(nullable = false)
 	private String especialidade;
+	
+	 @Column(nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorHora;
 
 	@OneToOne(mappedBy = "profissional", cascade = CascadeType.ALL)
 	private Agenda agenda;
 
 	@OneToMany(mappedBy = "profissional")
-	private List<Agendamento> agendamento = new ArrayList<>();
+	private List<Agendamento> agendamentos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "profissional")
-	private List<Servico> servico = new ArrayList<>();
+	private List<Servico> servicos = new ArrayList<>();
 
 	public Profissional() {
 	}
@@ -92,6 +93,10 @@ public class Profissional extends Usuario {
 	public List<Servico> getServico() {
 		return servico;
 	}
+	 @Override
+	    public TipoUsuario getTipo() {
+	        return TipoUsuario.PROFISSIONAL;
+	    }
 
 	public boolean isDisponivel(LocalDateTime dataHora) {
 		// 1. Verifica se está dentro do horário comercial (com tolerância padrão de 30
