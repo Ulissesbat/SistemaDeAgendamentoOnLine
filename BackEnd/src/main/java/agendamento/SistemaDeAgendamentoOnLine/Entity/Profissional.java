@@ -5,7 +5,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import agendamento.SistemaDeAgendamentoOnLine.Enums.StatusAgendamento;
 import agendamento.SistemaDeAgendamentoOnLine.Enums.TipoUsuario;
@@ -13,25 +12,20 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "tb_profissional")
 @DiscriminatorValue("PROFISSIONAL")
+@PrimaryKeyJoinColumn(name = "usuario_id")
 public class Profissional extends Usuario {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
 	@Column(nullable = false)
 	private String especialidade;
-	
-	 @Column(nullable = false, precision = 10, scale = 2)
+
 	private BigDecimal valorHora;
 
 	@OneToOne(mappedBy = "profissional", cascade = CascadeType.ALL)
@@ -46,20 +40,11 @@ public class Profissional extends Usuario {
 	public Profissional() {
 	}
 
-	public Profissional(Long id, String especialidade, BigDecimal valorHora, Agenda agenda) {
+	public Profissional(String especialidade, BigDecimal valorHora, Agenda agenda) {
 		super();
-		this.id = id;
 		this.especialidade = especialidade;
 		this.valorHora = valorHora;
 		this.agenda = agenda;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getEspecialidade() {
@@ -86,17 +71,18 @@ public class Profissional extends Usuario {
 		this.agenda = agenda;
 	}
 
-	public List<Agendamento> getAgendamento() {
-		return agendamento;
+	public List<Agendamento> getAgendamentos() {
+		return agendamentos;
 	}
 
-	public List<Servico> getServico() {
-		return servico;
+	public List<Servico> getServicos() {
+		return servicos;
 	}
-	 @Override
-	    public TipoUsuario getTipo() {
-	        return TipoUsuario.PROFISSIONAL;
-	    }
+
+	@Override
+	public TipoUsuario getTipo() {
+		return TipoUsuario.PROFISSIONAL;
+	}
 
 	public boolean isDisponivel(LocalDateTime dataHora) {
 		// 1. Verifica se está dentro do horário comercial (com tolerância padrão de 30
@@ -107,29 +93,12 @@ public class Profissional extends Usuario {
 		}
 
 		// 2. Verifica conflitos com agendamentos existentes
-		return agendamento.stream() // Corrigido para "agendamentos" (nome do campo)
+		return agendamentos.stream() // Corrigido para "agendamentos" (nome do campo)
 				.filter(ag -> ag.getStatus() != StatusAgendamento.CANCELADO).noneMatch(ag -> {
 					LocalDateTime dataAgendamento = ag.getDataHora(); // Certifique-se que este método existe
 					Duration diferenca = Duration.between(dataAgendamento, dataHora).abs();
 					return diferenca.compareTo(toleranciaPadrao) < 0;
 				});
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Profissional other = (Profissional) obj;
-		return Objects.equals(id, other.id);
 	}
 
 }

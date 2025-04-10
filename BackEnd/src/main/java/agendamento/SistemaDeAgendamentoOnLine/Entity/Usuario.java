@@ -17,16 +17,16 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_usuario")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
 public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	private String nome;
-	private String email;
-	private String telefone;
 
+    private String nome;
+    private String email;
+    private String telefone;
 
 	@OneToMany(mappedBy = "usuario") // Refere-se ao campo na classe Agendamento
 	private List<Agendamento> agendamentos;
