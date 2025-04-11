@@ -22,7 +22,7 @@ public class Servico {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private Integer duracao;
+	private String duracao;
 	private BigDecimal valor;
 
 	@ManyToOne
@@ -35,7 +35,7 @@ public class Servico {
 	public Servico() {
 	}
 
-	public Servico(Long id, String nome, Integer duracao, BigDecimal valor) {
+	public Servico(Long id, String nome, String duracao, BigDecimal valor) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -59,11 +59,11 @@ public class Servico {
 		this.nome = nome;
 	}
 
-	public Integer getDuracao() {
+	public String getDuracao() {
 		return duracao;
 	}
 
-	public void setDuracao(Integer duracao) {
+	public void setDuracao(String duracao) {
 		this.duracao = duracao;
 	}
 

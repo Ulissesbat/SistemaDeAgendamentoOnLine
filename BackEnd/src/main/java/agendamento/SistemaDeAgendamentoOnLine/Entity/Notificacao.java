@@ -1,6 +1,6 @@
 package agendamento.SistemaDeAgendamentoOnLine.Entity;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import agendamento.SistemaDeAgendamentoOnLine.Enums.CanalNotificacao;
@@ -20,7 +20,7 @@ public class Notificacao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String mensagem;
-	private LocalTime dataHora;
+	private LocalDateTime  dataHora;
 	
 	private CanalNotificacao canal;
 	
@@ -39,7 +39,7 @@ public class Notificacao {
 	public Notificacao() {
 	}
 
-	public Notificacao(Long id, String mensagem, LocalTime dataHora, CanalNotificacao canal) {
+	public Notificacao(Long id, String mensagem, LocalDateTime  dataHora, CanalNotificacao canal) {
 		super();
 		this.id = id;
 		this.mensagem = mensagem;
@@ -63,11 +63,11 @@ public class Notificacao {
 		this.mensagem = mensagem;
 	}
 
-	public LocalTime getDataHora() {
+	public LocalDateTime  getDataHora() {
 		return dataHora;
 	}
 
-	public void setDataHora(LocalTime dataHora) {
+	public void setDataHora(LocalDateTime  dataHora) {
 		this.dataHora = dataHora;
 	}
 
