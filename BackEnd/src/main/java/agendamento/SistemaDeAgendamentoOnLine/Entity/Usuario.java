@@ -25,7 +25,8 @@ public abstract class Usuario {
     private Long id;
 
     private String nome;
-    private String email;
+
+	private String email;
     private String telefone;
 
 	@OneToMany(mappedBy = "usuario") // Refere-se ao campo na classe Agendamento
@@ -73,6 +74,10 @@ public abstract class Usuario {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	
+	 public List<Agendamento> getAgendamentos() {
+			return agendamentos;
+		}
 
 	public abstract TipoUsuario getTipo();
 
