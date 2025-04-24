@@ -28,7 +28,7 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDateTime dataHora;
-	
+
 	@Enumerated(EnumType.STRING)
 	private StatusAgendamento status;
 
@@ -40,12 +40,12 @@ public class Agendamento {
 	@JoinColumn(name = "profissional_id")
 	private Profissional profissional;
 
-	@OneToOne(mappedBy = "agendamentos", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "agendamento", cascade = CascadeType.ALL)
 	private Notificacao notificacao;
 
-	@ManyToOne
-	@JoinColumn(name = "servico_id")
-	private Servico servico;
+    @ManyToOne
+    @JoinColumn(name = "servico_id")
+    private Servico servico;
 
 	public Agendamento() {
 	}
@@ -81,13 +81,13 @@ public class Agendamento {
 		this.status = status;
 	}
 
-	public Usuario getCliente() {
-		return usuario;
-	}
+	public Usuario getUsuario() {
+        return usuario;
+    }
 
-	public void setCliente(Usuario cliente) {
-		this.usuario = cliente;
-	}
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
 	public Profissional getProfissional() {
 		return profissional;
@@ -136,5 +136,6 @@ public class Agendamento {
 		Agendamento other = (Agendamento) obj;
 		return Objects.equals(id, other.id);
 	}
+
 
 }

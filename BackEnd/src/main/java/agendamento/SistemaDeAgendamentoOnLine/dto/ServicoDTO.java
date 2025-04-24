@@ -3,7 +3,6 @@ package agendamento.SistemaDeAgendamentoOnLine.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
-import agendamento.SistemaDeAgendamentoOnLine.Entity.Agendamento;
 import agendamento.SistemaDeAgendamentoOnLine.Entity.Servico;
 
 public class ServicoDTO {
@@ -15,7 +14,7 @@ public class ServicoDTO {
 
 	private ProfissionalDTO profissional;
 
-	private List<Agendamento> agendamentos;
+	private List<AgendamentoDTO> agendamentos;
 
 	public ServicoDTO() {
 	}
@@ -76,7 +75,7 @@ public class ServicoDTO {
 		this.profissional = profissional;
 	}
 
-	public List<Agendamento> getAgendamentos() {
+	public List<AgendamentoDTO> getAgendamentos() {
 		return agendamentos;
 	}
 

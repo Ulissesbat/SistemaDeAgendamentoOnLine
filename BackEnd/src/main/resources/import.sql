@@ -33,10 +33,10 @@ INSERT INTO tb_agendamentos (DATA_HORA, PROFISSIONAL_ID, SERVICO_ID, USUARIO_ID,
 INSERT INTO tb_agendamentos (DATA_HORA, PROFISSIONAL_ID, SERVICO_ID, USUARIO_ID, STATUS) VALUES ('2024-04-13 08:45:00', 4, 3, 3, 'CONCLUIDO');
 
 
-INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTOS_ID, MENSAGEM) VALUES (0, '2024-04-09 18:00:00', 1, 'Confirmação: Consulta agendada para 10/04 às 09:00 com Dra. Luana Alves');
-INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTOS_ID, MENSAGEM) VALUES (0, '2024-04-09 18:30:00', 2, 'Confirmação: Consulta agendada para 10/04 às 10:30 com Dra. Luana Alves');
-INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTOS_ID, MENSAGEM) VALUES (2, '2024-04-11 09:00:00', 3, 'Cancelamento: Consulta de 12/04 às 15:30 foi cancelada');
-INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTOS_ID, MENSAGEM) VALUES (2, '2024-04-10 10:00:00', 4, 'Cancelamento: Consulta de 11/04 às 14:00 foi cancelada');
-INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTOS_ID, MENSAGEM) VALUES (1, '2024-04-11 08:00:00', 5, 'Lembrete: Você tem consulta agendada para 12/04 às 11:00');
-INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTOS_ID, MENSAGEM) VALUES (0, '2024-04-12 19:00:00', 6, 'Confirmação: Consulta concluída em 13/04 às 08:45');
+INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTO_ID, MENSAGEM) VALUES (0, '2024-04-09 18:00:00', 1, 'Confirmação: Consulta agendada para 10/04 às 09:00 com Dra. Luana Alves');
+INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTO_ID, MENSAGEM) VALUES (0, '2024-04-09 18:30:00', 2, 'Confirmação: Consulta agendada para 10/04 às 10:30 com Dra. Luana Alves');
+INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTO_ID, MENSAGEM) VALUES (2, '2024-04-11 09:00:00', 3, 'Cancelamento: Consulta de 12/04 às 15:30 foi cancelada');
+INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTO_ID, MENSAGEM) VALUES (2, '2024-04-10 10:00:00', 4, 'Cancelamento: Consulta de 11/04 às 14:00 foi cancelada');
+INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTO_ID, MENSAGEM) VALUES (1, '2024-04-11 08:00:00', 5, 'Lembrete: Você tem consulta agendada para 12/04 às 11:00');
+INSERT INTO tb_notificacao (CANAL, DATA_HORA, AGENDAMENTO_ID, MENSAGEM) VALUES (0, '2024-04-12 19:00:00', 6, 'Confirmação: Consulta concluída em 13/04 às 08:45');
 

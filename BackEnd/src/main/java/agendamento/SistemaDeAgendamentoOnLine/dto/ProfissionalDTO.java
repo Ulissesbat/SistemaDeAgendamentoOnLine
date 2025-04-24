@@ -31,7 +31,7 @@ public class ProfissionalDTO {
 	public ProfissionalDTO(Profissional entity) {
 		this.especialidade = entity.getEspecialidade();
 		this.valorHora = entity.getValorHora();
-		this.agenda = entity.getAgenda();
+		this.agenda = (entity.getAgenda() != null) ? new AgendaDTO(entity.getAgenda()) : null;
 	}
 	public String getEspecialidade() {
 		return especialidade;

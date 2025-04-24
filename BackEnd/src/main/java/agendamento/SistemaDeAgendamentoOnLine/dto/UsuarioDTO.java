@@ -1,11 +1,8 @@
 package agendamento.SistemaDeAgendamentoOnLine.dto;
 
 import java.util.List;
-import java.util.Objects;
 
-import agendamento.SistemaDeAgendamentoOnLine.Entity.Agendamento;
 import agendamento.SistemaDeAgendamentoOnLine.Entity.Usuario;
-import agendamento.SistemaDeAgendamentoOnLine.Enums.TipoUsuario;
 
 public class UsuarioDTO {
 
@@ -16,6 +13,7 @@ public class UsuarioDTO {
 	    private String telefone;
 
 
+		@SuppressWarnings("unused")
 		private List<AgendamentoDTO> agendamentos;
 
 		public UsuarioDTO() {
@@ -68,9 +66,10 @@ public class UsuarioDTO {
 			this.telefone = telefone;
 		}
 
-		public List<AgendamentoDTO> getAgendamentos() {
-			return agendamentos;
+		public void setAgendamentos(List<AgendamentoDTO> agendamentos) {
+			this.agendamentos = agendamentos;
 		}
 
+		
 	}
 

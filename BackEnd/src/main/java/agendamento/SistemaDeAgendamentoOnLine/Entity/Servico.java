@@ -75,7 +75,6 @@ public class Servico {
 		this.valor = valor;
 	}
 
-
 	public Profissional getProfissional() {
 		return profissional;
 	}
@@ -86,6 +85,11 @@ public class Servico {
 
 	public List<Agendamento> getAgendamentos() {
 		return agendamentos;
+	}
+
+	public void addAgendamento(Agendamento agendamento) {
+		agendamentos.add(agendamento);
+		agendamento.setServico(this);
 	}
 
 	@Override

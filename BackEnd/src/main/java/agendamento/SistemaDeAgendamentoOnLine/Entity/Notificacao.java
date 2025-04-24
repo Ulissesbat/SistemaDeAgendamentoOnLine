@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -25,15 +25,15 @@ public class Notificacao {
 	private CanalNotificacao canal;
 	
 	@OneToOne
-	@MapsId
-	private Agendamento agendamentos;
+	@JoinColumn(name = "agendamento_id")
+	private Agendamento agendamento;
 
 	public Agendamento getAgendamento() {
-		return agendamentos;
+		return agendamento;
 	}
 
 	public void setAgendamento(Agendamento agendamento) {
-		this.agendamentos = agendamento;
+		this.agendamento = agendamento;
 	}
 
 	public Notificacao() {
