@@ -31,36 +31,41 @@ public class AgendamentoService {
 
 	@Transactional
 	public AgendamentoDTO insert(AgendamentoDTO dto) {
-		Agendamento entity = new Agendamento();
-		entity.setDatahora(dto.getDataHora());
-		entity.setStatus(StatusAgendamento.CONFIRMADO);
+		Agendamento agendamento = new Agendamento();
+		agendamento.setDatahora(dto.getDataHora());
+		agendamento.setStatus(StatusAgendamento.CONFIRMADO);
 
 		Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
 				.orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-		entity.setUsuario(usuario);
+		agendamento.setUsuario(usuario);
 
 		Profissional profissional = profissionalRepository.findById(dto.getProfissionalId())
 				.orElseThrow(() -> new RuntimeException("Profissional não encontrado"));
-		entity.setProfissional(profissional);
+		agendamento.setProfissional(profissional);
 
 		Servico servico = servicoRepository.findById(dto.getServicoId())
 				.orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
-		entity.setServico(servico);
+		agendamento.setServico(servico);
 
-		entity = agendamentoRepository.save(entity);
-		return new AgendamentoDTO(entity);
+		agendamento = agendamentoRepository.save(agendamento);
+		
+		/* notificacaoService.enviar(agendamento.getUsuario().getTelefone(), "Seu agendamento para " +
+				  agendamento.getDataHora() + " foi concluido"); */
+		return new AgendamentoDTO(agendamento);
 	}
-	/*
-	 * @Transactional public void cancelarAgendamento(Long agendamentoId, String
-	 * motivo) { Agendamento agendamento =
-	 * agendamentoRepository.findById(agendamentoId) .orElseThrow(() -> new
-	 * IllegalArgumentException("Agendamento não encontrado"));
-	 * 
-	 * agendamento.cancelar(); agendamentoRepository.save(agendamento);
-	 * 
-	 * // Disparar notificação (opcional) notificacaoService.enviar(
-	 * agendamento.getUsuario().getTelefone(), "Seu agendamento para " +
-	 * agendamento.getDataHora() + " foi cancelado. Motivo: " + motivo ); }
-	 */
 
+	@Transactional 
+	 public void cancelarAgendamento(Long agendamentoId) { 
+		Agendamento agendamento = agendamentoRepository.findById(agendamentoId) 
+				.orElseThrow(() -> new IllegalArgumentException("Agendamento não encontrado"));
+	 
+	 agendamento.cancelar(); 
+	 agendamentoRepository.save(agendamento);
+	 
+	 /*
+	 notificacaoService.enviar(agendamento.getUsuario().getTelefone(), "Seu agendamento para " +
+	  agendamento.getDataHora() + " foi cancelado"); 
+	  }*/
+	
+	}
 }
