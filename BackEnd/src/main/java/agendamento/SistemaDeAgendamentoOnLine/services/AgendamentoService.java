@@ -1,7 +1,10 @@
 package agendamento.SistemaDeAgendamentoOnLine.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import agendamento.SistemaDeAgendamentoOnLine.Entity.Agendamento;
 import agendamento.SistemaDeAgendamentoOnLine.Entity.Profissional;
@@ -13,7 +16,7 @@ import agendamento.SistemaDeAgendamentoOnLine.repositories.AgendamentoRepository
 import agendamento.SistemaDeAgendamentoOnLine.repositories.ProfissionalRepository;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.ServicoRepository;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.UsuarioRepository;
-import jakarta.transaction.Transactional;
+
 
 @Service
 public class AgendamentoService {
@@ -67,5 +70,12 @@ public class AgendamentoService {
 	  agendamento.getDataHora() + " foi cancelado"); 
 	  }*/
 	
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<AgendamentoDTO>findAll(Pageable pageable){
+		Page<Agendamento>list = agendamentoRepository.findAll(pageable);
+		return list.map(x -> new AgendamentoDTO(x));
+		
 	}
 }

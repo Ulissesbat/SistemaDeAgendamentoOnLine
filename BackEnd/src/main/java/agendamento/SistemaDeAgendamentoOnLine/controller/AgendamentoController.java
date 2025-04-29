@@ -3,8 +3,11 @@ package agendamento.SistemaDeAgendamentoOnLine.controller;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +37,13 @@ import agendamento.SistemaDeAgendamentoOnLine.services.AgendamentoService;
 		public ResponseEntity<Void> delete(@PathVariable Long id){
 			agendamentoService.cancelarAgendamento(id);
 			return ResponseEntity.noContent().build();
+		}
+		
+		@GetMapping
+		public ResponseEntity <Page<AgendamentoDTO>>findAll(Pageable pageable){
+			Page<AgendamentoDTO> list = agendamentoService.findAll(pageable);
+			return ResponseEntity.ok().body(list);
+		
 		}
 	}
 

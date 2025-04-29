@@ -6,6 +6,7 @@ import java.util.Objects;
 import agendamento.SistemaDeAgendamentoOnLine.Enums.TipoUsuario;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,8 @@ import jakarta.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
 public abstract class Usuario {
+	
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
