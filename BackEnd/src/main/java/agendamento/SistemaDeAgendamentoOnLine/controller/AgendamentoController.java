@@ -45,5 +45,13 @@ import agendamento.SistemaDeAgendamentoOnLine.services.AgendamentoService;
 			return ResponseEntity.ok().body(list);
 		
 		}
+		
+		@GetMapping(value = "/{id}")
+		public ResponseEntity<AgendamentoDTO> findById(@PathVariable Long id){
+			AgendamentoDTO dto =  agendamentoService.findById(id);
+			return ResponseEntity.ok().body(dto);
+		}
+		
+		
 	}
 

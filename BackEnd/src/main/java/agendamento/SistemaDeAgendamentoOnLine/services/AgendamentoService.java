@@ -78,4 +78,19 @@ public class AgendamentoService {
 		return list.map(x -> new AgendamentoDTO(x));
 		
 	}
+	
+	@Transactional(readOnly = true)
+	public AgendamentoDTO findById(Long id) {
+		Agendamento agendamento = agendamentoRepository.findById(id).get();
+		return new AgendamentoDTO(agendamento);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
