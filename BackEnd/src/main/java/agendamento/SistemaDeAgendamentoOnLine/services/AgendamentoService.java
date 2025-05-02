@@ -89,8 +89,17 @@ public class AgendamentoService {
 	}
 	
 	@Transactional(readOnly = true)
-    public List<AgendamentoDetalhadoDTO> findAgendamentosDetalhadosByNome(String nome) {
+    public List<AgendamentoDetalhadoDTO> findAgendamentosDetalhadosByNomeUsuario(String nome) {
         List<Agendamento> agendamentos = agendamentoRepository.findAgendamentosCompletosByUsuarioNome(nome);
+        
+        return agendamentos.stream()
+                .map(agendamento -> new AgendamentoDetalhadoDTO(agendamento))
+                .toList();
+    }
+	
+	@Transactional(readOnly = true)
+    public List<AgendamentoDetalhadoDTO> findAgendamentosDetalhadosByNomeProfissional(String nome) {
+        List<Agendamento> agendamentos = agendamentoRepository.findAgendamentosByProfissionalNome(nome);
         
         return agendamentos.stream()
                 .map(agendamento -> new AgendamentoDetalhadoDTO(agendamento))

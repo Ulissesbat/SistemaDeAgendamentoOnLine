@@ -18,6 +18,15 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long>{
                "JOIN FETCH a.servico s " +
                "WHERE LOWER(u.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
         List<Agendamento> findAgendamentosCompletosByUsuarioNome(@Param("nome") String nome);
+        
+
+            @Query("SELECT DISTINCT a FROM Agendamento a " +
+                   "JOIN FETCH a.profissional p " +
+                   "JOIN FETCH a.usuario u " +
+                   "JOIN FETCH a.servico s " +
+                   "WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
+            List<Agendamento> findAgendamentosByProfissionalNome(@Param("nome") String nome);
+        
    
 }
 	

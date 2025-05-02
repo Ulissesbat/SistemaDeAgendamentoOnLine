@@ -57,7 +57,14 @@ import agendamento.SistemaDeAgendamentoOnLine.services.AgendamentoService;
 		@GetMapping("/nome/{nome}")
 		public ResponseEntity<List<AgendamentoDetalhadoDTO>> findAgendamentosByNomeUsuario(
 		        @PathVariable String nome) {
-		    List<AgendamentoDetalhadoDTO> result = agendamentoService.findAgendamentosDetalhadosByNome(nome);
+		    List<AgendamentoDetalhadoDTO> result = agendamentoService.findAgendamentosDetalhadosByNomeUsuario(nome);
+		    return ResponseEntity.ok(result);
+		}
+		
+		@GetMapping("/profissional/{nome}")
+		public ResponseEntity<List<AgendamentoDetalhadoDTO>> findAgendamentosByNomeProfissional(
+		        @PathVariable String nome) {
+		    List<AgendamentoDetalhadoDTO> result = agendamentoService.findAgendamentosDetalhadosByNomeProfissional(nome);
 		    return ResponseEntity.ok(result);
 		}
 		
