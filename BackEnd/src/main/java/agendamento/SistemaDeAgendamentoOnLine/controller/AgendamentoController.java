@@ -1,6 +1,7 @@
 package agendamento.SistemaDeAgendamentoOnLine.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import agendamento.SistemaDeAgendamentoOnLine.dto.AgendamentoDTO;
+import agendamento.SistemaDeAgendamentoOnLine.dto.AgendamentoDetalhadoDTO;
 import agendamento.SistemaDeAgendamentoOnLine.services.AgendamentoService;
 
 	@RestController
@@ -52,6 +54,12 @@ import agendamento.SistemaDeAgendamentoOnLine.services.AgendamentoService;
 			return ResponseEntity.ok().body(dto);
 		}
 		
+		@GetMapping("/nome/{nome}")
+		public ResponseEntity<List<AgendamentoDetalhadoDTO>> findAgendamentosByNomeUsuario(
+		        @PathVariable String nome) {
+		    List<AgendamentoDetalhadoDTO> result = agendamentoService.findAgendamentosDetalhadosByNome(nome);
+		    return ResponseEntity.ok(result);
+		}
 		
 	}
 

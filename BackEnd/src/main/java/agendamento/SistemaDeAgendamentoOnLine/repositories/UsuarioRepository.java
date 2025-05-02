@@ -8,4 +8,5 @@ import agendamento.SistemaDeAgendamentoOnLine.Entity.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
+
 }

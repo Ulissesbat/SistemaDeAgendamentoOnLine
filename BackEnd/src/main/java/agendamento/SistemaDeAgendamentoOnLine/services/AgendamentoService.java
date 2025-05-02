@@ -1,5 +1,7 @@
 package agendamento.SistemaDeAgendamentoOnLine.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +14,7 @@ import agendamento.SistemaDeAgendamentoOnLine.Entity.Servico;
 import agendamento.SistemaDeAgendamentoOnLine.Entity.Usuario;
 import agendamento.SistemaDeAgendamentoOnLine.Enums.StatusAgendamento;
 import agendamento.SistemaDeAgendamentoOnLine.dto.AgendamentoDTO;
+import agendamento.SistemaDeAgendamentoOnLine.dto.AgendamentoDetalhadoDTO;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.AgendamentoRepository;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.ProfissionalRepository;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.ServicoRepository;
@@ -85,12 +88,13 @@ public class AgendamentoService {
 		return new AgendamentoDTO(agendamento);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	@Transactional(readOnly = true)
+    public List<AgendamentoDetalhadoDTO> findAgendamentosDetalhadosByNome(String nome) {
+        List<Agendamento> agendamentos = agendamentoRepository.findAgendamentosCompletosByUsuarioNome(nome);
+        
+        return agendamentos.stream()
+                .map(agendamento -> new AgendamentoDetalhadoDTO(agendamento))
+                .toList();
+    }
 	
 }

@@ -6,7 +6,6 @@ import java.util.Objects;
 import agendamento.SistemaDeAgendamentoOnLine.Enums.TipoUsuario;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -107,4 +106,5 @@ public abstract class Usuario {
 		return Objects.equals(id, other.id);
 	}
 
+	
 }
