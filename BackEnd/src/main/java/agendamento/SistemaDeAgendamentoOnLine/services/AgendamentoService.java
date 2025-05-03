@@ -19,6 +19,7 @@ import agendamento.SistemaDeAgendamentoOnLine.repositories.AgendamentoRepository
 import agendamento.SistemaDeAgendamentoOnLine.repositories.ProfissionalRepository;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.ServicoRepository;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
@@ -59,7 +60,39 @@ public class AgendamentoService {
 				  agendamento.getDataHora() + " foi concluido"); */
 		return new AgendamentoDTO(agendamento);
 	}
+	
+	@Transactional
+	public AgendamentoDTO update(Long id, AgendamentoDTO dto) {
+	    Agendamento agendamento = agendamentoRepository.findById(id)
+	            .orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado"));
 
+	    agendamento.setDatahora(dto.getDataHora());
+
+	    if (dto.getStatus() != null) {
+	        agendamento.setStatus((dto.getStatus()));
+	    }
+
+	    if (!agendamento.getUsuario().getId().equals(dto.getUsuarioId())) {
+	        Usuario usuario = usuarioRepository.getReferenceById(dto.getUsuarioId());
+	        agendamento.setUsuario(usuario);
+	    }
+	    
+	    if (!agendamento.getProfissional().getId().equals(dto.getProfissionalId())) {
+	        Profissional profissional = profissionalRepository.getReferenceById(dto.getProfissionalId());
+	        agendamento.setProfissional(profissional);
+	    }
+	    
+	    if (!agendamento.getServico().getId().equals(dto.getServicoId())) {
+	        Servico servico = servicoRepository.getReferenceById(dto.getServicoId());
+	        agendamento.setServico(servico);
+	    }
+
+	    agendamento = agendamentoRepository.save(agendamento);
+	    
+	    return new AgendamentoDTO(agendamento);
+	}
+	
+	
 	@Transactional 
 	 public void cancelarAgendamento(Long agendamentoId) { 
 		Agendamento agendamento = agendamentoRepository.findById(agendamentoId) 
