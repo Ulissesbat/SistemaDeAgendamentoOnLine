@@ -28,7 +28,7 @@ public class Profissional extends Usuario {
 
 	private BigDecimal valorHora;
 
-	@OneToOne(mappedBy = "profissional", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Agenda agenda;
 
 	@OneToMany(mappedBy = "profissional")

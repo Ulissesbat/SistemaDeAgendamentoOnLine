@@ -1,4 +1,4 @@
-package agendamento.SistemaDeAgendamentoOnLine.controller;
+package agendamento.SistemaDeAgendamentoOnLine.controllers;
 
 import java.net.URI;
 import java.util.List;

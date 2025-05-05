@@ -15,6 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -31,7 +32,7 @@ public class Agenda {
     private String diasDisponiveis; 
     
     @OneToOne
-    @MapsId
+    @JoinColumn(name = "profissional_usuario_id")
     private Profissional profissional;
     
     public Agenda() {
