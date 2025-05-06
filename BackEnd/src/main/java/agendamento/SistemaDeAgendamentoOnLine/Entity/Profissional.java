@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import agendamento.SistemaDeAgendamentoOnLine.Enums.StatusAgendamento;
 import agendamento.SistemaDeAgendamentoOnLine.Enums.TipoUsuario;
 import jakarta.persistence.CascadeType;
@@ -29,6 +31,7 @@ public class Profissional extends Usuario {
 	private BigDecimal valorHora;
 
 	@OneToOne(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private Agenda agenda;
 
 	@OneToMany(mappedBy = "profissional")

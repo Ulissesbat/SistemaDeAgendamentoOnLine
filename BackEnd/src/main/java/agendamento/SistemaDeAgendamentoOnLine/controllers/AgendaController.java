@@ -1,9 +1,12 @@
 package agendamento.SistemaDeAgendamentoOnLine.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +17,7 @@ import agendamento.SistemaDeAgendamentoOnLine.dto.AgendaDTO;
 import agendamento.SistemaDeAgendamentoOnLine.services.AgendaService;
 
 @RestController
-@RequestMapping("/agenda")
+@RequestMapping("/agendas")
 public class AgendaController {
 	
 	
@@ -27,6 +30,12 @@ public class AgendaController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(agendaDTO.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(agendaDTO);
+	}
+	
+	
+	@GetMapping("/profissional/{profissionalId}")
+	public List<AgendaDTO> agendasByProfissional(@PathVariable Long profissionalId) {
+	    return agendaService.agendasByProfissional(profissionalId);
 	}
 
 }

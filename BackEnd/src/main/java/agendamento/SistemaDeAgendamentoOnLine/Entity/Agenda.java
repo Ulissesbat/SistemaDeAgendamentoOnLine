@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.Map;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,7 +17,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -33,6 +33,7 @@ public class Agenda {
     
     @OneToOne
     @JoinColumn(name = "profissional_usuario_id")
+    @JsonBackReference
     private Profissional profissional;
     
     public Agenda() {

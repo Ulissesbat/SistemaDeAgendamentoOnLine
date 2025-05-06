@@ -11,23 +11,29 @@ public class AgendaDTO {
 
     private Long profissionalId;
     
+    private String nomeProfissional;
+    
     public AgendaDTO() {
     }
     
-    public AgendaDTO(Long id, String diasDisponiveis, Long profissionalId) {
-		super();
-		this.id = id;
-		this.diasDisponiveis = diasDisponiveis;
-		this.profissionalId = profissionalId;
-	}
+    public AgendaDTO(Long id, String diasDisponiveis, Long profissionalId, String nomeProfissional) {
+        super();
+        this.id = id;
+        this.diasDisponiveis = diasDisponiveis;
+        this.profissionalId = profissionalId;
+        this.nomeProfissional = nomeProfissional;
+    }
     
     public AgendaDTO(Agenda entity) {
- 		this.id = entity.getId();
- 		this.diasDisponiveis = entity.getDiasDisponiveis();
- 		 this.profissionalId = (entity.getProfissional() != null) 
- 	            ? entity.getProfissional().getId() 
- 	            : null;
- 	}
+        this.id = entity.getId();
+        this.diasDisponiveis = entity.getDiasDisponiveis();
+        this.profissionalId = (entity.getProfissional() != null) 
+            ? entity.getProfissional().getId() 
+            : null;
+        this.nomeProfissional = (entity.getProfissional() != null)
+            ? entity.getProfissional().getNome()
+            : null;
+    }
 
 	public Long getId() {
 		return id;
@@ -53,4 +59,11 @@ public class AgendaDTO {
 		this.profissionalId = profissionalId;
 	}
 
+	 public String getNomeProfissional() {
+	        return nomeProfissional;
+	    }
+
+	    public void setNomeProfissional(String nomeProfissional) {
+	        this.nomeProfissional = nomeProfissional;
+	    }
 }

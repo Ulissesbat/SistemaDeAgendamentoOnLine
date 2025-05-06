@@ -1,16 +1,19 @@
 package agendamento.SistemaDeAgendamentoOnLine.services;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import agendamento.SistemaDeAgendamentoOnLine.Entity.Agenda;
 import agendamento.SistemaDeAgendamentoOnLine.Entity.Profissional;
 import agendamento.SistemaDeAgendamentoOnLine.dto.AgendaDTO;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.AgendaRepository;
 import agendamento.SistemaDeAgendamentoOnLine.repositories.ProfissionalRepository;
-import jakarta.transaction.Transactional;
+
 
 @Service
 public class AgendaService {
@@ -44,5 +47,11 @@ public class AgendaService {
 	    
 	    return new AgendaDTO(novaAgenda);
 	}
-
+	
+	public List<AgendaDTO> getAgendasByProfissional(Long profissionalId) {
+	    List<Agenda> agendas = agendaRepository.findAgendasByProfissional(profissionalId);
+	    return agendas.stream()
+	                  .map(AgendaDTO::new)  // Mapeando cada Agenda para AgendaDTO
+	                  .collect(Collectors.toList());
+	}
 }
